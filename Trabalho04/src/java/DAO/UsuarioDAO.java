@@ -15,19 +15,23 @@ public class UsuarioDAO {
         con = ConnectionFactory.getConnection();
     }
     
-    public boolean adicionarUsuario(Usuario usuario){
+    public boolean adicionarUsuario(Usuario usuario) throws Exception{
         
-        String sql = "INSERT INTO tb_usuario (login_Usuario,senha_Usuario,nome_Usuario) VALUES (?, ?, ?)";
-        
+        String sql = "INSERT INTO tb_usuario(id_Usuario,login_Usuario,senha_Usuario,nome_Usuario) VALUES (?,?,?,?)";
+        int id = verificarUltimoId() + 1;
+        con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         try{
             //Inserindo os dados
             stmt = con.prepareStatement(sql);
-            stmt.setString(1, usuario.getLogin());
-            stmt.setString(2, usuario.getSenha());
-            stmt.setString(3, usuario.getNome());
+            stmt.setInt(1,id);
+            stmt.setString(2, usuario.getLogin());
+            stmt.setString(3, usuario.getSenha());
+            stmt.setString(4, usuario.getNome());
+            
             //Executando a query
-            stmt.executeUpdate();            
+            stmt.executeUpdate();
+            
             return true;
         }catch(SQLException ex){
             System.err.println("Erro na inserção: " + ex);
@@ -83,6 +87,29 @@ public class UsuarioDAO {
             return resultado;
         }
     }
+    
+    public int verificarUltimoId(){
+        String sql = "SELECT * FROM tb_usuario";
+        int contador = 0;
+        PreparedStatement stmt = null;
+        
+        try{
+            //Inserindo os dados
+            stmt = con.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            
+            //Percorrendo os dados no banco e preenchendo a lista.
+            while(rs.next()){                
+                contador++;
+            }
+        return contador;     
+        }catch(SQLException ex){
+            System.err.println("Erro na contagem: " + ex);
 
+        }finally{
+            ConnectionFactory.closeConnection(con, stmt);
+            return contador;
+        }
+    }
     
 }

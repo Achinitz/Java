@@ -8,8 +8,8 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
     
-    private static final String Driver = "com.mysql.cj.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3306/exercicio3_JavaWeb";
+    private static final String Driver = "com.mysql.jdbc.Driver";
+    private static final String URL = "jdbc:mysql://localhost/exercicio3_JavaWeb?useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false";
     private static final String User = "root";
     private static final String Password = "1234";
     

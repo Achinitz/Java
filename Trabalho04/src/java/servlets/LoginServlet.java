@@ -77,21 +77,35 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-        
+
         UsuarioDAO dao = new UsuarioDAO();
-        
+       
         //Recebendo os dados passados pelo post
         Login user = new Login();
-        user.setLogin(request.getParameter("Login"));
-        user.setSenha(request.getParameter("Senha"));
+        user.setLogin((String)request.getParameter("Login"));
+        user.setSenha((String)request.getParameter("Senha"));
+        
+        //Mensagem de erro
+        String msg = "Não foi possível realizar o login, por gentileza verifique os dados inseridos.";
+        String page = "/index.html";
                 
         //Verificando se o Login é valido
         if(dao.validarUsuario(user.getLogin(), user.getSenha())){
+            
+            //Iniciando sessão
             HttpSession session = request.getSession();
-            session.setAttribute("Logado", user);
+            session.setAttribute("login", user);            
+            
+            //RequestDispatcher rd = request.getRequestDispatcher("/portal.jsp");
+            response.sendRedirect("JSP/portal.jsp");            
+            
         }else{
-            //response.sendRedirect("/erro.jsp");
-            //RequestDispatcher rd = request.getRequestDispatcher("/erro.jsp").forward(request, response);
+            
+            //Enviando a mensagem de erro para o arquivo erro.jsp
+            RequestDispatcher rd = request.getRequestDispatcher("JSP/erro.jsp");
+            request.setAttribute("msg", msg);
+            request.setAttribute("page", page);
+            rd.forward(request, response);
         }
     }
 

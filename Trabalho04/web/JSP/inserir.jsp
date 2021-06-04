@@ -1,6 +1,6 @@
 <%-- 
-    Document   : portal
-    Created on : 01/06/2021, 22:52:34
+    Document   : inserir
+    Created on : 03/06/2021, 17:02:38
     Author     : Gustavo
 --%>
 
@@ -8,9 +8,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Portal</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Inserir</title>
     </head>
     <body>
         <%
@@ -30,14 +30,24 @@
             }           
         %>
         <div>
-          <jsp:useBean id="login" class="beans.Login" scope="session"/>
-            <h1>Bem vindo <jsp:getProperty name="login" property="login"/>, você está logado :)</h1>
+            <h1>Tela de Cadastro</h1>
+            <form action="${pageContext.request.contextPath}/CadastrarUsuarioServlet" method="Post">
+                 <div class="form-group">
+                   <label for="exampleInputEmail1">Name</label>
+                   <input type="text" class="form-control" placeholder="Name" name="Name">
+                 </div>
+                 <div class="form-group">
+                   <label for="exampleInputEmail1">Login</label>
+                   <input type="text" class="form-control" placeholder="Login" name="Login">
+                 </div>
+                 <div class="form-group">
+                   <label for="exampleInputPassword1">Senha</label>
+                   <input type="text" class="form-control" placeholder="Senha" name="Senha">
+                 </div>
+                <button type="submit" class="btn btn-primary">
+                    Cadastrar
+                </button>
+           </form>
         </div>
-        
-        <div>
-            <a class="btn btn-primary" href="inserir.jsp" role="button">Inserir</a>
-            <a class="btn btn-primary" href="index.html" role="button">Sair</a>
-        </div>
-        
     </body>
 </html>
